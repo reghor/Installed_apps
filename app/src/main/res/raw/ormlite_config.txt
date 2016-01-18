@@ -1,0 +1,21 @@
+# --table-start--
+dataClass=by.reghor.installedapps.entity.AppInfo
+tableName=appinfo
+# --table-fields-start--
+# --field-start--
+fieldName=packageName
+indexName=packageName_string_idx
+id=true
+# --field-end--
+# --field-start--
+fieldName=lastCheckedDate
+# --field-end--
+# --field-start--
+fieldName=status
+# --field-end--
+# --field-start--
+fieldName=appName
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

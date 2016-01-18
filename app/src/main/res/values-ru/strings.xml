@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Приложения на телефоне</string>
+    <string name="get_list_button">Список приложений</string>
+    <string name="db_error_init_message">Не возможно подключится к базе данных, ошибка при инициализации</string>
+</resources>
