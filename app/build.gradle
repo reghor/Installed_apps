@@ -31,8 +31,4 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-core:4.48'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'de.greenrobot:eventbus:2.4.1'
-    compile "com.google.dagger:dagger:$dagger_version"
-    apt "com.google.dagger:dagger-compiler:$dagger_version"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile 'com.nineoldandroids:library:2.4.0'
 }

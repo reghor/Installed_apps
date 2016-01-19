@@ -13,6 +13,5 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="dummy imange"
-        android:scaleType="fitXY"
-        android:src="@drawable/download" />
+        android:scaleType="fitXY" />
 </LinearLayout>
