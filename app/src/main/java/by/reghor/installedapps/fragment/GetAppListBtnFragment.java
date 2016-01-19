@@ -32,4 +32,5 @@ public class GetAppListBtnFragment extends Fragment{
             view.findViewById(R.id.get_app_list).setOnClickListener(UIClickListener.getInstance());
         }
     }
+
 }

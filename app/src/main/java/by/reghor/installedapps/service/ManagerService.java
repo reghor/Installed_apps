@@ -7,6 +7,7 @@ import java.util.List;
 import by.reghor.installedapps.R;
 import by.reghor.installedapps.activity.MainActivity;
 import by.reghor.installedapps.entity.AppInfo;
+import by.reghor.installedapps.module.AppInfoKeeper;
 
 /**
  * Created by reghor on 1/18/16.
@@ -26,6 +27,8 @@ public class ManagerService {
             case R.id.get_app_list:
                 MainActivity activity = (MainActivity) view.getContext();
                 List<AppInfo> appInfoList=appInfoService.getMergedAppInfoList(activity);
+                AppInfoKeeper.getInstance().setAppInfoList(appInfoList);
+
                 uiService.setActivityAppListLayout(activity, appInfoList);
                 break;
         }

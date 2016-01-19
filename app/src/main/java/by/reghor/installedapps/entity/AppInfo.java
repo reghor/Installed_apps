@@ -1,15 +1,20 @@
 package by.reghor.installedapps.entity;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 
 
 @DatabaseTable(tableName = "appinfo")
-public class AppInfo {
+public class AppInfo implements Parcelable {
 
     @DatabaseField(id = true, index = true)
     private String packageName;
@@ -18,11 +23,11 @@ public class AppInfo {
     @DatabaseField
     private Status status;
 
-    private Drawable icon;
+    private Bitmap icon;
     @DatabaseField
     private String appName;
 
-    public AppInfo(String packageName, Date lastCheckedDate, Status status, Drawable icon, String appName) {
+    public AppInfo(String packageName, Date lastCheckedDate, Status status, Bitmap icon, String appName) {
         this.packageName = packageName;
         this.lastCheckedDate = lastCheckedDate;
         this.status = status;
@@ -33,6 +38,32 @@ public class AppInfo {
     public AppInfo() {
 
     }
+
+    public AppInfo(Parcel parcel) {
+        parcel.readString();
+
+        try {
+            this.lastCheckedDate = DateFormat.getInstance().parse(parcel.readString());
+        } catch (ParseException e) {
+            Log.e("parcelling app info", "can not parcel date");
+        }
+        this.status = Status.valueOf(parcel.readString());
+        this.icon = parcel.readParcelable(Bitmap.class.getClassLoader());
+        this.appName = parcel.readString();
+
+    }
+
+    public static final Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
+        @Override
+        public AppInfo createFromParcel(Parcel in) {
+            return new AppInfo(in);
+        }
+
+        @Override
+        public AppInfo[] newArray(int size) {
+            return new AppInfo[size];
+        }
+    };
 
     public String getPackageName() {
         return packageName;
@@ -58,11 +89,11 @@ public class AppInfo {
         this.status = status;
     }
 
-    public Drawable getIcon() {
+    public Bitmap getIcon() {
         return icon;
     }
 
-    public void setIcon(Drawable icon) {
+    public void setIcon(Bitmap icon) {
         this.icon = icon;
     }
 
@@ -72,6 +103,20 @@ public class AppInfo {
 
     public void setAppName(String appName) {
         this.appName = appName;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getPackageName());
+        dest.writeString(DateFormat.getInstance().format(getLastCheckedDate()));
+        dest.writeString(getStatus().name());
+        dest.writeParcelable(getIcon(), flags);
+        dest.writeString(getAppName());
     }
 
     @Override
@@ -111,4 +156,6 @@ public class AppInfo {
                 ", appName='" + appName + '\'' +
                 '}';
     }
+
+
 }

@@ -4,20 +4,20 @@
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:padding="10dp">
+    android:padding="@dimen/item_fragment_app_list_top_ll_padding">
 
     <ImageView
         android:id="@+id/appIcon"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="@dimen/item_fragment_app_list_icon_vertical_margin"
+        android:layout_marginRight="@dimen/item_fragment_app_list_icon_right_margin"
+        android:layout_marginTop="@dimen/item_fragment_app_list_icon_vertical_margin"
         android:gravity="center_vertical"
-        android:maxHeight="36dp"
-        android:maxWidth="36dp"
-        android:minHeight="36dp"
-        android:minWidth="36dp"
+        android:maxHeight="@dimen/item_fragment_app_list_icon_side_size"
+        android:maxWidth="@dimen/item_fragment_app_list_icon_side_size"
+        android:minHeight="@dimen/item_fragment_app_list_icon_side_size"
+        android:minWidth="@dimen/item_fragment_app_list_icon_side_size"
         android:scaleType="centerInside"
         android:adjustViewBounds="true"/>
 
@@ -30,11 +30,9 @@
             android:id="@+id/appName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/app_name_vertical_margin"
             android:gravity="center_vertical"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            style="@style/AppNameStyle" />
 
         <TextView
             android:id="@+id/scanDate"

@@ -1,6 +1,8 @@
 package by.reghor.installedapps.adapter;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,19 +19,40 @@ import by.reghor.installedapps.R;
 import by.reghor.installedapps.entity.AppInfo;
 import by.reghor.installedapps.entity.Status;
 
+
 /**
  * Created by reghor on 1/18/16.
  */
 public class AppInfoListAdapter extends ArrayAdapter<AppInfo> {
-    private String dateFormat="yyyy-MM-dd hh:mm:ss";
+    private String dateFormat = "yyyy-MM-dd hh:mm:ss";
+
     public AppInfoListAdapter(Context context, List<AppInfo> items) {
         super(context, R.layout.fragment_app_list, items);
     }
 
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        public void onReceive(android.content.Context context, Intent intent) {
+
+            //Check for action you need
+            String acceptableActionName = getContext().getResources().getString(R.string.populate_list_view_action);
+            if (intent.getAction().equals(acceptableActionName)) {
+                String parcelableArrayName = getContext().getResources().getString(R.string.app_info_list_parcelable);
+                List<AppInfo> appInfoList = intent.getParcelableArrayListExtra(parcelableArrayName);
+                clear();
+                if (appInfoList != null) {
+                    for (AppInfo appInfo : appInfoList) {
+                        insert(appInfo, getCount());
+                    }
+                }
+                notifyDataSetChanged();
+            }
+        }
+    };
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        DateFormat dateFormatter=new SimpleDateFormat(dateFormat);
+        DateFormat dateFormatter = new SimpleDateFormat(dateFormat);
         if (convertView == null) {
             // inflate the GridView item layout
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -39,7 +62,7 @@ public class AppInfoListAdapter extends ArrayAdapter<AppInfo> {
             viewHolder = new ViewHolder();
             viewHolder.appIcon = (ImageView) convertView.findViewById(R.id.appIcon);
             viewHolder.name = (TextView) convertView.findViewById(R.id.appName);
-            viewHolder.date=(TextView) convertView.findViewById(R.id.scanDate);
+            viewHolder.date = (TextView) convertView.findViewById(R.id.scanDate);
 
             convertView.setTag(viewHolder);
         } else {
@@ -59,15 +82,15 @@ public class AppInfoListAdapter extends ArrayAdapter<AppInfo> {
                 viewHolder.name.setTextColor(Color.RED);
                 break;
             }
-            default:{
+            default: {
                 viewHolder.name.setTextColor(Color.BLACK);
             }
         }
 
 
-        viewHolder.appIcon.setImageDrawable(item.getIcon());
+        viewHolder.appIcon.setImageBitmap(item.getIcon());
         viewHolder.name.setText(item.getAppName());
-        viewHolder.date.setText( dateFormatter.format(item.getLastCheckedDate()));
+        viewHolder.date.setText(dateFormatter.format(item.getLastCheckedDate()));
 
         return convertView;
     }
@@ -83,5 +106,13 @@ public class AppInfoListAdapter extends ArrayAdapter<AppInfo> {
         TextView name;
         TextView date;
 
+    }
+
+    public String getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(String dateFormat) {
+        this.dateFormat = dateFormat;
     }
 }

@@ -3,6 +3,9 @@ package by.reghor.installedapps.module;
 import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import java.text.DateFormat;
@@ -32,7 +35,7 @@ public class SystemInfoRetriever {
         List<AppInfo> result = new ArrayList<>();
         for (ApplicationInfo applicationInfo : apps) {
             AppInfo appInfo = new AppInfo();
-            appInfo.setIcon(applicationInfo.loadIcon(pm));
+            appInfo.setIcon(getIcon(applicationInfo.loadIcon(pm)));
             appInfo.setAppName(getApplicationName(activity, applicationInfo.packageName));
             appInfo.setPackageName(applicationInfo.packageName);
             appInfo.setIcon(getIcon(activity, applicationInfo.packageName));
@@ -64,13 +67,30 @@ public class SystemInfoRetriever {
 //        return (String) (ai != null ? pm.getApplicationLabel(ai) : "???");
     }
 
-    public Drawable getIcon(Activity activity, String packageName) {
+    public Bitmap getIcon(Activity activity, String packageName) {
+        Bitmap result = null;
         try {
-            return activity.getApplicationContext().getPackageManager().getApplicationIcon(packageName);
+
+            Drawable drawable = activity.getApplicationContext().getPackageManager().getApplicationIcon(packageName);
+            result = getIcon(drawable);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
+    }
+
+    private Bitmap getIcon(Drawable icon) {
+        Bitmap APKicon;
+        if (icon instanceof BitmapDrawable) {
+            APKicon = ((BitmapDrawable) icon).getBitmap();
+        } else {
+            Bitmap bitmap = Bitmap.createBitmap(icon.getIntrinsicWidth(), icon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            icon.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            icon.draw(canvas);
+            APKicon = bitmap;
+        }
+        return APKicon;
     }
 
     public static SystemInfoRetriever getInstance() {

@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
+        android:layout_width="@dimen/fragment_main_icon_width"
+        android:layout_height="@dimen/fragment_main_icon_height"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="dummy imange"

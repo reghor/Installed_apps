@@ -5,7 +5,6 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -29,12 +28,8 @@ public class AppListFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setListAdapter(new AppInfoListAdapter(this.getContext(), items));
 
-        // initialize the items list
-        Toast.makeText(this.getContext(),"n of apps"+items.size(),Toast.LENGTH_LONG);
-
-        // initialize and set the list adapter
-        setListAdapter(new AppInfoListAdapter(getActivity(), items));
     }
 
     @Override
@@ -44,7 +39,6 @@ public class AppListFragment extends ListFragment {
     }
 
 
-
     public List<AppInfo> getItems() {
         return items;
     }
@@ -52,8 +46,6 @@ public class AppListFragment extends ListFragment {
     public void setItems(List<AppInfo> items) {
         this.items = items;
     }
-
-
 
 
 }

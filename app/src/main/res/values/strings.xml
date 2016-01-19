@@ -3,4 +3,6 @@
     <string name="get_list_button">Get list of apps</string>
     <string name="db_error_init_message">Can not connect to database, problem with initalization</string>
     <string name="database">ORMLITE</string>
+    <string name="populate_list_view_action">POPULATE_LIST_ACTION</string>
+    <string name="app_info_list_parcelable">APP_INFO_LIST</string>
 </resources>

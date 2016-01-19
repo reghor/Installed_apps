@@ -1,5 +1,9 @@
 package by.reghor.installedapps.service;
 
+import android.app.Activity;
+import android.content.Intent;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import by.reghor.installedapps.R;
@@ -31,7 +35,14 @@ public class UIService {
     public void setActivityAppListLayout(final MainActivity activity, List<AppInfo> appInfoList) {
         activity.setContentView(R.layout.activity_main_list);
         activity.addFragment(R.id.main_rl_list_of_apps, AppListFragment.newInstance(appInfoList), MainActivity.LIST_OF_APPS);
+    }
 
+    public void updateListFragment(ArrayList<AppInfo> appInfoList, Activity activity) {
+        Intent intent = new Intent();
+        String actionName = activity.getResources().getString(R.string.populate_list_view_action);
+        intent.setAction(actionName);
+        String listName = activity.getResources().getString(R.string.app_info_list_parcelable);
+        intent.putParcelableArrayListExtra(listName, appInfoList);
     }
 
 
